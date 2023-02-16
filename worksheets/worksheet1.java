@@ -13,32 +13,37 @@ class Worksheet1 {
     e. //print c680
     */
 
-    // 5. print integers from 1 up to 999999 which are multiples of 3 or 5
+    // 5. print integers from 1 up to 9999999 which are multiples of 3 or 5
     // while
     static void PrintInt (int type) {
         // type: 0 = while loop, 1 = for loop, 2 =
         int i = 1;
         switch (type) {
-            case 0: //while loop
-                while (i <= 999999) {
-                    if (i % 3 == 0 || i % 5 == 0) { System.out.print(i + " "); }
+            case 0 -> { //while loop
+                while (i <= 9999999) {
+                    if (i % 3 == 0 || i % 5 == 0) {
+                        System.out.print(i + " ");
+                    }
                     i++;
                 }
-                break;
-            case 1: // for loop
-                for (i = 1; i <= 999999; i++){
-                    if (i % 3 == 0 || i % 5 == 0) { System.out.print(i + " "); }
+            }
+            case 1 -> { // for loop
+                for (i = 1; i <= 9999999; i++) {
+                    if (i % 3 == 0 || i % 5 == 0) {
+                        System.out.print(i + " ");
+                    }
                 }
-                break;
-            case 2:
+            }
+            case 2 -> {
                 do {
-                    if (i % 3 == 0 || i % 5 == 0) { System.out.print(i + " "); }
+                    if (i % 3 == 0 || i % 5 == 0) {
+                        System.out.print(i + " ");
+                    }
                     i++;
                 }
-                while (i <= 999999);
-                break;
-            default:
-                System.out.println("invalid type");
+                while (i <= 9999999);
+            }
+            default -> System.out.println("invalid type");
         }
     }
 
@@ -76,16 +81,15 @@ class Worksheet1 {
 
     // with break
     public static void Problem8b (int day) {
-        switch (day%7) {
-            case 0: System.out.println("Sunday"); break;
-            case 1: System.out.println("Monday"); break;
-            case 2: System.out.println("Tuesday"); break;
-            case 3: System.out.println("Wednesday"); break;
-            case 4: System.out.println("Thursday"); break;
-            case 5: System.out.println("Friday"); break;
-            case 6: System.out.println("Saturday"); break;
-            default:
-                System.out.println("not a day"); break;
+        switch (day % 7) {
+            case 0 -> System.out.println("Sunday");
+            case 1 -> System.out.println("Monday");
+            case 2 -> System.out.println("Tuesday");
+            case 3 -> System.out.println("Wednesday");
+            case 4 -> System.out.println("Thursday");
+            case 5 -> System.out.println("Friday");
+            case 6 -> System.out.println("Saturday");
+            default -> System.out.println("not a day");
         }
     }
 
