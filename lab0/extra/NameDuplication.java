@@ -2,7 +2,6 @@
 Additional challenge #1:
 Write a complete program to print your own name 100 times with line number
 */
-package ddp2.lab0.extra;
 import java.util.Scanner;
 
 class NameDuplication {

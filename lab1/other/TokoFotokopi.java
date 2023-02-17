@@ -1,4 +1,3 @@
-package ddp2.lab1;
 import java.util.Scanner;
 
 public class TokoFotokopi {

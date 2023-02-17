@@ -1,4 +1,3 @@
-package lab0.java;
 import java.util.Scanner;
 
 class Nilai {

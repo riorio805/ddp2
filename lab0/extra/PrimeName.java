@@ -2,7 +2,6 @@
 Additional challenge #2:
 Do the same thing as #1 but only output prime numbers up to 100
 */
-package ddp2.lab0.extra;
 import java.util.Scanner;
 
 class PrimeName {
