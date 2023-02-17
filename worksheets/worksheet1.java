@@ -34,7 +34,7 @@ class Worksheet1 {
                     }
                 }
             }
-            case 2 -> {
+            case 2 -> { // do while loop
                 do {
                     if (i % 3 == 0 || i % 5 == 0) {
                         System.out.print(i + " ");
@@ -74,12 +74,11 @@ class Worksheet1 {
             case 4: System.out.println("Thursday");
             case 5: System.out.println("Friday");
             case 6: System.out.println("Saturday");
-            default:
-                System.out.println("not a day");
+            default: System.out.println("not a day");
         }
     }
 
-    // with break
+    // with "break"
     public static void Problem8b (int day) {
         switch (day % 7) {
             case 0 -> System.out.println("Sunday");
