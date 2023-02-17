@@ -8,7 +8,7 @@ public class TokoFotokopi {
         System.out.print("""
         Selamat datang di Toko Fotokopi Dek Depe!
         --------------------------------------------------------
-        Masukkan jumlah mahasiswa yang ingin melakukan fotokopi:\s""");
+        Masukkan jumlah mahasiswa yang ingin melakukan fotokopi:""");
 
         int jumlahMahasiswa = input.nextInt();
         double totalSemua = 0;
@@ -56,6 +56,6 @@ public class TokoFotokopi {
         // output terakhir
         System.out.printf("""
         ---------------------RINGKASAN DATA---------------------
-        Hasil pendapatan yang diperoleh Toko Fotokopi dari %d mahasiswa adalah %.2f\s""", jumlahMahasiswa, totalSemua);
+        Hasil pendapatan yang diperoleh Toko Fotokopi dari %d mahasiswa adalah %.2f""", jumlahMahasiswa, totalSemua);
     }
 }
