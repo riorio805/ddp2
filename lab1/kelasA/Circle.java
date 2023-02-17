@@ -11,10 +11,12 @@ public class Circle
 {
     public static void main(String[] args)
     {
+        // init stuff
         final double PI = Math.PI; //3.141592653589793
         double radius, area, circumference;
         Scanner input = new Scanner(System.in);
 
+        // repeat twice
         for (int _c = 0; _c < 2; _c++) {
             // input
             System.out.print("Please enter a value for the radius: ");
