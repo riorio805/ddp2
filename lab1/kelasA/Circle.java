@@ -16,11 +16,17 @@ public class Circle
         Scanner input = new Scanner(System.in);
 
         for (int _c = 0; _c < 2; _c++) {
+            // input
+            System.out.print("Please enter a value for the radius: ");
             radius = input.nextDouble();
             input.nextLine();
+
+            // area
             area = PI * radius * radius;
-            circumference = 2 * PI * radius;
             System.out.println("The area of a circle with radius " + radius + " is " + area);
+
+            // circumference
+            circumference = 2 * PI * radius;
             System.out.println("The circumference of a circle with radius " + radius + " is " + circumference);
         }
     }
