@@ -31,5 +31,7 @@ public class Circle
             circumference = 2 * PI * radius;
             System.out.println("The circumference of a circle with radius " + radius + " is " + circumference);
         }
+
+        input.close();
     }
 }
