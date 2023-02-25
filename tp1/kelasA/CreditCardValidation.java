@@ -40,6 +40,12 @@ public class CreditCardValidation {
         }
     }
 
+    /**
+     * Checks if a number is a valid credit card / debit card number according to the Luhn check.
+     *
+     * @param number The number to be checked.
+     * @return The validity of the number.
+    */
     private static boolean isValid (long number) {
         // check size of number
         // the number is invalid if smaller than 13 digits or bigger than 16 digits.
@@ -66,6 +72,11 @@ public class CreditCardValidation {
         return (total % 10 == 0);
     }
 
+    /**
+     * Returns the amount of digits in a number d.
+     *
+     * @param d a long
+     */
     private static int getSize (long d) {
         // if x is a positive natural number,
         // the floor(log10(x)) of a number x is equal to the number of digits in x (base 10) - 1.
