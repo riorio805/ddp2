@@ -49,6 +49,7 @@ public class NotaGenerator {
 
                     System.out.println("Masukkan nama Anda:");
                     nama = input.next();
+                    input.next();
                     nama = nama.split(" ")[0].toUpperCase();
 
 
@@ -77,19 +78,19 @@ public class NotaGenerator {
                     }
 
                     while (true) {
+                        boolean check = false;
                         System.out.println("Masukkan paket laundry:");
                         paket = input.next().toLowerCase();
                         switch (paket) {
-                            case "express", "fast", "reguler"-> {}
-                            case "?" -> {showPaket(); continue;}
+                            case "express", "fast", "reguler"-> check = true;
+                            case "?" -> showPaket();
                             default -> {
                                 System.out.println("""
                                     Paket hemat tidak diketahui
                                     [ketik ? untuk mencari tahu jenis paket]""");
-                                continue;
                             }
                         }
-                        break;
+                        if (check) break;
                     }
 
                     while (true) {
@@ -192,6 +193,7 @@ public class NotaGenerator {
                 case "express" -> 1;
                 case "fast" -> 2;
                 case "reguler" -> 3;
+                default -> 0;
             }
         );
 
@@ -199,6 +201,7 @@ public class NotaGenerator {
                 case "express" -> 12000;
                 case "fast" -> 10000;
                 case "reguler" -> 7000;
+                default -> 0;
         };
 
         return String.format("""

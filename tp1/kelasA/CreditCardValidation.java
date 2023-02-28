@@ -9,8 +9,8 @@ public class CreditCardValidation {
         while (true) {
             // take credit card number from user
             cardString = JOptionPane.showInputDialog(null,
-                    "Enter a credit card / debit card number as a long integer,\nQUIT to end:\n",
-                    "Validation of Credit Card / Debit Card Numbers", JOptionPane.PLAIN_MESSAGE);
+                "Enter a credit card / debit card number as a long integer,\nQUIT to end:\n",
+                "Validation of Credit Card / Debit Card Numbers", JOptionPane.PLAIN_MESSAGE);
             // check if input == "quit"
             if (cardString.equalsIgnoreCase("quit")) break;
 
@@ -29,68 +29,83 @@ public class CreditCardValidation {
         }
     }
 
-    /**
-     * Checks if a number is a valid credit card / debit card number according to the Luhn check.
-     *
-     * @param strNumber The number to be checked as a string.
-     * @return The validity of the number.
-    */
-    public static boolean isValid (String strNumber) {
-        long number;
+    public static boolean isValid (String number) {
+        // trim whitespace
+        number = number.trim();
 
         // check if input is a number (long)
         // invalid if not a number (long)
         try {
-            number = Long.parseLong(strNumber);
+           Long.parseLong(number);
         } catch (Exception e) {
             return false;
         }
 
         // check size of number
         // the number is invalid if smaller than 13 digits or bigger than 16 digits.
-        if (getSize(number) < 13 || getSize(number) > 16) return false;
+        if (number.length() < 13 || number.length() > 16) return false;
 
-        int total = 0;  // running total
-        int i = 1;  // parity of the current position from the right
-        // loop until all digits of the numbers is checked (number /= 10 until 0)
-        while (number != 0) {
-            int digit = (int) (number % 10);
-            // add to total based on position of digit from the right
-            // easy case: digit == 0, not affected by doubling.
-            total += (digit == 0) ? 0 :
-            // digits in odd positions
-            // normal addition to the total
-                (i % 2 == 1) ? digit :
-            // digits in even positions
-            // double the digit, then return the digital root of the digit using mod 9.
-            // if a number > 0 is divisible by 9, then the sum of digits is always 9.
-            // ^^^ doesn't apply to 0, but that case is already dealt with.
-                (2*(digit) % 9 == 0) ? 9 : 2*(digit) % 9;
+        // check if starts with 4, 5, 37, or 6
+        if (!  (prefixMatched(number, 4) ||
+                prefixMatched(number, 5) ||
+                prefixMatched(number, 37) ||
+                prefixMatched(number, 6))) return false;
 
-            // remove the last digit off the number by floor division
-            // add to position to change parity
-            number /= 10;
-            ++i;
-        }
-
-        // check if the total is divisible by 10
-        return (total % 10 == 0);
+        // get result by adding sum of double even places and sum of odd places.
+        // check if the result is divisible by 10
+        int result = sumOfDoubleEvenPlace(number) + sumOfOddPlace(number);
+        return (result % 10 == 0);
     }
 
-    /**
-     * Returns the amount of digits in a number d.
-     *
-     * @param d a long
-     * @return length of d as an integer.
-     */
-    public static int getSize (long d) {
-        // if x is a positive natural number,
-        // the floor(log10(x)) of a number x is equal to the number of digits in x (base 10) - 1.
-        // ex. floor(log10(1)) = 0, floor(log10(5)) = 0, floor(log10(99)) = 1, floor(log10(100)) = 2.
-        // since d is a (positive) long and the case where d = 0 is taken care of, this algorithm always works.
+    public static int sumOfDoubleEvenPlace (String number) {
+        // make the first digit even parity
+        number = (number.length() % 2 == 1) ? number.substring(1) : number;
+        // keep running total
+        int total = 0;
+        // loop until number is empty, taking 2 characters from the left every time
+        while (!number.isEmpty()) {
+            // parse digit
+            int digit = Integer.parseInt(number.substring(0,1));
+            // add double to total
+            total += getDigit(2*digit);
+            // number is of even length, substring will not return error
+            number = number.substring(2);
+        }
 
-        if (d == 0) return 1; // special case where d = 0 (log10(0) = -Inf, instead return 1)
-        d = Math.abs(d);    // make d a positive number since sign doesn't matter
-        return (int) Math.floor(Math.log10(d)) + 1;
+        return total;
+    }
+
+    public static int sumOfOddPlace (String number) {
+        // make the first digit even parity
+        number = (number.length() % 2 == 0) ? number.substring(1) : number;
+        // keep running total
+        int total = 0;
+        // loop until number is empty, taking 2 characters from the left every time
+        while (!number.isEmpty()) {
+            // parse digit
+            int digit = Integer.parseInt(number.substring(0,1));
+            // add to total
+            total += getDigit(digit);
+            // number is of odd length, will return error unless we only take one when length == 1
+            number = number.substring(Math.min(number.length(), 2));
+        }
+
+        return total;
+    }
+
+    public static int getDigit(int digit) {
+        // digit is a 1 digit number, return digit
+        return (digit < 10) ? digit :
+            // digit is a 2-digit number
+            // if a number > 0 is divisible by 9, then the sum of digits is always 9.
+            // ^^^ doesn't apply to 0, but that case is already dealt with.
+            (digit % 9 == 0) ? 9 : digit % 9;
+    }
+
+    public static boolean prefixMatched (String number, int d) {
+        // change d to string
+        String match = Integer.toString(d);
+        // use .startsWith() to match prefix
+        return number.startsWith(match);
     }
 }
