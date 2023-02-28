@@ -4,6 +4,7 @@ public class CreditCardValidation {
     public static void main (String[] args) {
         // initialize variables
         String cardString;
+        long cardNum;
 
         // loop forever until break
         while (true) {
@@ -11,39 +12,31 @@ public class CreditCardValidation {
             cardString = JOptionPane.showInputDialog(null,
                 "Enter a credit card / debit card number as a long integer,\nQUIT to end:\n",
                 "Validation of Credit Card / Debit Card Numbers", JOptionPane.PLAIN_MESSAGE);
-            // check if input == "quit"
+            // check if input == "quit", break if so
             if (cardString.equalsIgnoreCase("quit")) break;
 
-            // check validity of card number
-            if (isValid(cardString)) {
-                // card number is valid
+            // check if input is a number (long)
+            try {
+                cardNum = Long.parseLong(cardString);
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,
-                    String.format("The number %s is valid", cardString),
+                    "The number " + cardString + " is invalid.",
                     "Validation of Credit Card / Debit Card Numbers", JOptionPane.PLAIN_MESSAGE);
-            } else {
-                // card number is invalid
-                JOptionPane.showMessageDialog(null,
-                    String.format("The number %s is invalid", cardString),
-                    "Validation of Credit Card / Debit Card Numbers", JOptionPane.PLAIN_MESSAGE);
+                continue;
             }
+
+            // check if number is valid
+            // use ternary operator to display validity
+            JOptionPane.showMessageDialog(null,
+                "The number " + cardString + " is " + ((isValid(cardNum)) ? "valid." : "invalid."),
+                "Validation of Credit Card / Debit Card Numbers", JOptionPane.PLAIN_MESSAGE);
         }
     }
 
-    public static boolean isValid (String number) {
-        // trim whitespace
-        number = number.trim();
-
-        // check if input is a number (long)
-        // invalid if not a number (long)
-        try {
-           Long.parseLong(number);
-        } catch (Exception e) {
-            return false;
-        }
-
+    public static boolean isValid (long number) {
         // check size of number
         // the number is invalid if smaller than 13 digits or bigger than 16 digits.
-        if (number.length() < 13 || number.length() > 16) return false;
+        if (getSize(number) < 13 || getSize(number) > 16) return false;
 
         // check if starts with 4, 5, 37, or 6
         if (!  (prefixMatched(number, 4) ||
@@ -57,37 +50,36 @@ public class CreditCardValidation {
         return (result % 10 == 0);
     }
 
-    public static int sumOfDoubleEvenPlace (String number) {
-        // make the first digit even parity
-        number = (number.length() % 2 == 1) ? number.substring(1) : number;
-        // keep running total
+    public static int sumOfDoubleEvenPlace (long number) {
+        // remove first digit to set parity to even
+        number /= 10;
+        // initialize total
         int total = 0;
-        // loop until number is empty, taking 2 characters from the left every time
-        while (!number.isEmpty()) {
-            // parse digit
-            int digit = Integer.parseInt(number.substring(0,1));
-            // add double to total
-            total += getDigit(2*digit);
-            // number is of even length, substring will not return error
-            number = number.substring(2);
+        // go from right side
+        // divide 100 every time until 0
+        while (number != 0) {
+            // take rightmost digit by mod 10
+            // add double it to total after parsing through getDigit
+            // getDigit requires int --> use casting
+            total += getDigit( (int) (2*(number % 10)) );
+
+            number /= 100;
         }
 
         return total;
     }
 
-    public static int sumOfOddPlace (String number) {
-        // make the first digit even parity
-        number = (number.length() % 2 == 0) ? number.substring(1) : number;
-        // keep running total
+    public static int sumOfOddPlace (long number) {
+        // initialize total
         int total = 0;
-        // loop until number is empty, taking 2 characters from the left every time
-        while (!number.isEmpty()) {
-            // parse digit
-            int digit = Integer.parseInt(number.substring(0,1));
-            // add to total
-            total += getDigit(digit);
-            // number is of odd length, will return error unless we only take one when length == 1
-            number = number.substring(Math.min(number.length(), 2));
+        // go from right side
+        // jump every 2 digit by dividing 100 every time until 0
+        while (number != 0) {
+            // take rightmost digit by mod 10
+            // add it to total
+            total += number % 10;
+
+            number /= 100;
         }
 
         return total;
@@ -98,14 +90,23 @@ public class CreditCardValidation {
         return (digit < 10) ? digit :
             // digit is a 2-digit number
             // if a number > 0 is divisible by 9, then the sum of digits is always 9.
+            // otherwise the sum of d
             // ^^^ doesn't apply to 0, but that case is already dealt with.
             (digit % 9 == 0) ? 9 : digit % 9;
     }
 
-    public static boolean prefixMatched (String number, int d) {
-        // change d to string
-        String match = Integer.toString(d);
-        // use .startsWith() to match prefix
-        return number.startsWith(match);
+    public static boolean prefixMatched (long number, int d) {
+        // find prefix of length of d
+        // check if the first digits of number match with d
+        return getPrefix(number, getSize(d)) == d;
+    }
+
+    public static int getSize (long d) {
+        if (-10 < d && d < 10) return 1;    // base case, 1 digit
+        return 1 + getSize(d/10);        // recursion, divide 10 to remove 1 digit
+    }
+
+    public static long getPrefix (long number, int k) {
+        return number / (long) (Math.pow(10, getSize(number) - getSize(k)));
     }
 }
