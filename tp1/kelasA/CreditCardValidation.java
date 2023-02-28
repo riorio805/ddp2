@@ -107,6 +107,8 @@ public class CreditCardValidation {
     }
 
     public static long getPrefix (long number, int k) {
+        // number/10^k is exactly the same as taking the first len(number)-k digits of number
+        // use Math.pow for exponential then cast to long
         return number / (long) (Math.pow(10, getSize(number) - getSize(k)));
     }
 }
