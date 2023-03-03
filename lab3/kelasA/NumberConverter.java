@@ -49,11 +49,19 @@ public class NumberConverter {
             // Calculate next hex digit from the right
             int digit = decInt % 16;
 
-            // From the digit, hind the next character in the string
-            // If digit >= 10, use Capital letters ('A' + digit - 10)
-            // else use numbers ('0' + digit)
-            // then cast to char
-            char nextChar = (char) ( (digit >= 10) ? ('A' + (digit - 10) ) : ('0' + digit) );
+            // From the digit, find the next character in the string
+            // Use switch to set the char based on digit
+            // If between 10-15 -> A-F
+            // else between 0-9 stays the same (cast to char).
+            char nextChar = switch (decInt % 16) {
+                case 10 -> 'A';
+                case 11 -> 'B';
+                case 12 -> 'C';
+                case 13 -> 'D';
+                case 14 -> 'E';
+                case 15 -> 'F';
+                default -> (char) (decInt % 16);
+            };
 
             // Append nextChar to the left of outStr
             outStr = nextChar + outStr;
