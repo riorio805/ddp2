@@ -35,16 +35,12 @@ class templateBeJayNG {
 
         // copy score with 1 extra array and insert insertedRow to the end
         int[][] newScore = new int[score.length+1][banyakMatkul];
-        for (int i = 0; i < score.length; i++) {
-            newScore[i] = score[i];
-        }
+        System.arraycopy(score, 0, newScore, 0, score.length);
         newScore[newScore.length-1] = insertedRow;
 
         // copy kumpulannamaMahasiswa with 1 extra element and insert namaMahasiswa to the end
         String[] newMahasiswa = new String[kumpulanNamaMahasiswa.length+1];
-        for (int i = 0; i < kumpulanNamaMahasiswa.length; i++) {
-            newMahasiswa[i] = kumpulanNamaMahasiswa[i];
-        }
+        System.arraycopy(kumpulanNamaMahasiswa, 0, newMahasiswa, 0, kumpulanNamaMahasiswa.length);
         newMahasiswa[newMahasiswa.length-1] = namaMahasiswa;
 
         // update score and kumpulanNamaMahasiswa
@@ -113,8 +109,8 @@ class templateBeJayNG {
 
     static void menghapusMahasiswa() {
         System.out.println("==============Menghapus Mahasiswa==============");
-
         // Menghapus mahasiswa dari array 2D score dan kumpulanNamaMahasiswa
+
         System.out.print("Masukkan nama mahasiswa: ");
         String mahasiswaHapus = input.nextLine();
 
@@ -146,26 +142,20 @@ class templateBeJayNG {
         // copy everything from score except for index
         // up until index
         for (int i = 0; i < index; i++) {
-            for (int j = 0; j < banyakMatkul; j++){
-                newScore[i][j] = score[i][j];
-            }
+            System.arraycopy(score[i], 0, newScore[i], 0, banyakMatkul);
         }
         // index + 1 until end
         for (int i = index; i < newScore.length; i++) {
-            for (int j = 0; j < banyakMatkul; j++){
-                newScore[i][j] = score[i+1][j];
-            }
+            System.arraycopy(score[i + 1], 0, newScore[i], 0, banyakMatkul);
         }
-        score = newScore;
 
         // same thing for kumpulanNamaMahasiswa
         String[] newMahasiswa = new String[kumpulanNamaMahasiswa.length-1];
-        for (int i = 0; i < index; i++) {
-            newMahasiswa[i] = kumpulanNamaMahasiswa[i];
-        }
-        for (int i = index; i < newScore.length; i++) {
-            newMahasiswa[i] = kumpulanNamaMahasiswa[i+1];
-        }
+        System.arraycopy(kumpulanNamaMahasiswa, 0, newMahasiswa, 0, index);
+        System.arraycopy(kumpulanNamaMahasiswa, index + 1, newMahasiswa, index, newScore.length - index);
+
+        // update score and kumpulanNamaMahasiswa
+        score = newScore;
         kumpulanNamaMahasiswa = newMahasiswa;
     }
 
@@ -175,21 +165,17 @@ class templateBeJayNG {
         // Mencetak tabel nilai berdasarkan urutan mahasiswa ketika diinput
 
         // print top row
-        System.out.printf("%-20s", "Nama");
-        for (int i = 0; i < banyakMatkul; i++) {
-            System.out.printf("%-20s", kumpulanNamaMatkul[i]);
+        System.out.printf("%s", "Nama");
+        for (String str: kumpulanNamaMatkul) {
+            System.out.printf("\t\t\t%s", str);
         }
         System.out.println();
 
         // print the rest
         for (int m = 0; m < kumpulanNamaMahasiswa.length; m++) {
-            for (int i = -1; i < banyakMatkul; i++) {
-                if (i == -1) {
-                    System.out.printf("%-20s", kumpulanNamaMahasiswa[m]);
-                }
-                else {
-                    System.out.printf("%-20d", score[m][i]);
-                }
+            System.out.printf("%s", kumpulanNamaMahasiswa[m]);
+            for (int i: score[m]) {
+                System.out.printf("\t\t\t%d", i);
             }
             System.out.println();
         }
