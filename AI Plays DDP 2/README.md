@@ -20,7 +20,7 @@ All labs and TP, both from class A or other classes
 #### AI??
 Yes. It also sucks. (Not in the good way.)
 #### Why?
-Because it's funny. 
+Because it's funny, and it's easy.
 #### Can I copy this?
 No. You will get an E.
 #### For studying though...
