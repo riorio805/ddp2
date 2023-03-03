@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 class templateBeJayNG {
@@ -8,6 +7,7 @@ class templateBeJayNG {
     private static int[][] score;
     private static int banyakMatkul;
 
+    // main from template
     public static void main(String[] args) {
         init();
 
@@ -33,13 +33,23 @@ class templateBeJayNG {
     public static void insertRow (int[] insertedRow, String namaMahasiswa) {
         // Insert row baru ke dalam array 2D score dan kumpulanNamaMahasiswa
 
-        // create new row of score and insert insertedRow to the end
-        score = Arrays.copyOf(score, score.length+1);
-        score[score.length-1] = insertedRow;
+        // copy score with 1 extra array and insert insertedRow to the end
+        int[][] newScore = new int[score.length+1][banyakMatkul];
+        for (int i = 0; i < score.length; i++) {
+            newScore[i] = score[i];
+        }
+        newScore[newScore.length-1] = insertedRow;
 
-        // create new row of kumpulannamaMahasiswa and insert namaMahasiswa to the end
-        kumpulanNamaMahasiswa = Arrays.copyOf(kumpulanNamaMahasiswa, kumpulanNamaMahasiswa.length+1);
-        kumpulanNamaMahasiswa[kumpulanNamaMahasiswa.length-1] = namaMahasiswa;
+        // copy kumpulannamaMahasiswa with 1 extra element and insert namaMahasiswa to the end
+        String[] newMahasiswa = new String[kumpulanNamaMahasiswa.length+1];
+        for (int i = 0; i < kumpulanNamaMahasiswa.length; i++) {
+            newMahasiswa[i] = kumpulanNamaMahasiswa[i];
+        }
+        newMahasiswa[newMahasiswa.length-1] = namaMahasiswa;
+
+        // update score and kumpulanNamaMahasiswa
+        score = newScore;
+        kumpulanNamaMahasiswa = newMahasiswa;
     }
 
     static void init() {
@@ -61,7 +71,7 @@ class templateBeJayNG {
         }
 
         // init score and kumpulanNamaMahasiswa
-        score = new int[0][0];
+        score = new int[0][banyakMatkul];
         kumpulanNamaMahasiswa = new String[0];
     }
 
@@ -108,16 +118,20 @@ class templateBeJayNG {
         System.out.print("Masukkan nama mahasiswa: ");
         String mahasiswaHapus = input.nextLine();
 
+        // set idx to invalid
         int idx = -1;
+        // find idx of nama mahasiswa, case insensitive
         for (int i = 0; i < kumpulanNamaMahasiswa.length; i++) {
             if (mahasiswaHapus.equalsIgnoreCase(kumpulanNamaMahasiswa[i])) {idx = i; break;}
         }
-
-        if (idx == -1) {
-            System.out.println("Mahasiswa tersebut tidak ada di database.");
+        // check if idx is valid, remove from database if so.
+        if (idx != -1) {
+            // valid
+            removeElement(idx);
         }
         else{
-            removeElement(idx);
+            // invalid
+            System.out.println("Mahasiswa tersebut tidak ada di database.");
         }
     }
 
@@ -128,13 +142,15 @@ class templateBeJayNG {
         System.out.printf("Mahasiswa bernama %s telah dihapus dari BeJayNG\n", kumpulanNamaMahasiswa[index]);
 
         // create copy of score with length-1 -> newScore
-        // copy everything from score except for index
         int[][] newScore = new int[score.length-1][banyakMatkul];
+        // copy everything from score except for index
+        // up until index
         for (int i = 0; i < index; i++) {
             for (int j = 0; j < banyakMatkul; j++){
                 newScore[i][j] = score[i][j];
             }
         }
+        // index + 1 until end
         for (int i = index; i < newScore.length; i++) {
             for (int j = 0; j < banyakMatkul; j++){
                 newScore[i][j] = score[i+1][j];
@@ -164,7 +180,6 @@ class templateBeJayNG {
             System.out.printf("%-20s", kumpulanNamaMatkul[i]);
         }
         System.out.println();
-
 
         // print the rest
         for (int m = 0; m < kumpulanNamaMahasiswa.length; m++) {
