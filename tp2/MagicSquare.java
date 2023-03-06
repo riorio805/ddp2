@@ -12,6 +12,7 @@ public class MagicSquare {
     public MagicSquare(int s)
     {
         size = s;
+        // divide into 3 cases
         square = switch (s % 4) {
             case 0 -> generateDoublyEvenMagicSquare(s); // s = 4n
             case 2 -> generateSinglyEvenMagicSquare(s); // s = 4n + 2
@@ -21,6 +22,7 @@ public class MagicSquare {
 
     /**
      Generates a Magic Square of order (2n + 1).
+
      @param s the size of the square
      @return A magic square of size s.
      */
@@ -55,7 +57,7 @@ public class MagicSquare {
 
     /**
      Generates a Magic Square of order (4n).
-     Algorithm is based on: <a href="https://mathworld.wolfram.com/MagicSquare.html">Wolfram MathWorld</a>
+     Algorithm is based on <a href="https://mathworld.wolfram.com/MagicSquare.html">an article from Wolfram MathWorld</a>
 
      @param s the size of the square
      @return A magic square of size s.
@@ -87,14 +89,16 @@ public class MagicSquare {
 
     /**
      Generates a Magic Square of order (4n + 2).
-     Algorithm is based on: <a href="https://en.wikipedia.org/wiki/Strachey_method_for_magic_squares">Strachy's method</a>
+     Algorithm is based on <a href="https://en.wikipedia.org/wiki/Strachey_method_for_magic_squares">Strachey method</a>
+     Modified to work with generateOddMagicSquare(s/2) for the subsquares.
 
      @param s the size of the square
      @return A magic square of size s.
      */
     public int[][] generateSinglyEvenMagicSquare (int s) {
-        // initalize output square
-        int[][] square = new int[s][s];
+        // initializing
+        int[][] square = new int[s][s]; // output square
+        int intTemp;    // temporary value
 
         // generate a magic square of size s/2
         int[][] subsquare = generateOddMagicSquare(s/2);
@@ -138,7 +142,6 @@ public class MagicSquare {
             System.arraycopy(temp, 0, square[s/2 + row], 0, (s-2)/4);
         }
 
-        int intTemp;
         // swap the middle cell of A and D
         // A middle = ( s/4, s/4 ), D middle = ( 3*s/4, s/4 )
         intTemp = square[s/4][s/4];
@@ -181,8 +184,8 @@ public class MagicSquare {
     }
 
     /**
-     Find the sum of the diagonal.
-     @return sum: the sum of the diagonal
+     Find the sum of the opposite diagonal.
+     @return sum: the sum of the opposite diagonal
      */
     public int oppositeDiagonalSum()
     {
@@ -226,7 +229,7 @@ public class MagicSquare {
 
     /**
      Gets a string representation of the contents of this square.
-     @return a string represenation of the square
+     @return a string representation of the square
      */
     public String toString()
     {
