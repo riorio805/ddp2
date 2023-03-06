@@ -45,7 +45,10 @@ public class MagicSquare {
 
             // check next element
             // if not empty go back then go up 1 space == up 2 space, left 1 space
-            if (square[ row ][ col ] != 0) {row = row - 2; --col;}
+            if (square[ row ][ col ] != 0) {
+                row -= 2;
+                --col;
+            }
 
             // keep position between 0 and s-1 (use floor mod)
             row = Math.floorMod(row, s);
