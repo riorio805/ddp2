@@ -1,7 +1,7 @@
 // part 3
 
 /* *********************************************************
-// Circle.java
+// AI_TokoFotokopi.java
 //
 // Print the area of a circle with two different radii
 //**********************************************************/
