@@ -1,18 +1,21 @@
 package ddp2.tp2;
 
 public class MagicSquare {
-    private int[][] square;
-    private int size;
+    private final int[][] square;
+    private final int size;
 
     /**
      Construct a MagicSquare object
-     (precondition: s is greater than 2 ).
+     (precondition: s is greater than 2).
      @param s the size of the square
      */
     public MagicSquare(int s)
     {
         size = s;
         // divide into 3 cases
+        // 1. size is of order (4n)    , doubly even
+        // 2. size is of order (4n + 2), singly even
+        // 3. size is of order (2n + 1), odd
         square = switch (s % 4) {
             case 0 -> generateDoublyEvenMagicSquare(s); // s = 4n
             case 2 -> generateSinglyEvenMagicSquare(s); // s = 4n + 2
@@ -137,11 +140,8 @@ public class MagicSquare {
         // swap (s-2)/4 columns from the left of A and D
         for (int row = 0; row < s/2; row++) {
             int[] temp = new int[(s-2)/4];
-            // temp = row of A
             System.arraycopy(square[row], 0, temp, 0, (s-2)/4);
-            // row of A = row of D
             System.arraycopy(square[s/2 + row], 0, square[row], 0, (s-2)/4);
-            // row of D = temp
             System.arraycopy(temp, 0, square[s/2 + row], 0, (s-2)/4);
         }
 
@@ -160,11 +160,8 @@ public class MagicSquare {
         // swap (s-2)/4 - 1 columns from the right of C and B
         for (int row = 0; row < s/2; row++) {
             int[] temp = new int[(s-2)/4 - 1];
-            // temp = row of B
             System.arraycopy(square[row], (3*s+2)/4 + 1, temp, 0, (s-2)/4 - 1);
-            // row of B = row of C
             System.arraycopy(square[s/2 + row], (3*s+2)/4 + 1, square[row], (3*s+2)/4 + 1, (s-2)/4 - 1);
-            // row of C = temp
             System.arraycopy(temp, 0, square[s/2 + row], (3*s+2)/4 + 1, (s-2)/4 - 1);
         }
 
