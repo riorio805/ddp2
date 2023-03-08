@@ -22,7 +22,7 @@ public class NumberConverter {
             catch (Exception e) { valid = false; }
 
             // Second check: Check if input is between 0 and 2147483647 (Integer max value)
-            if (valid) valid = (0 <= inputNum) && (inputNum <= Integer.MAX_VALUE);
+            if (valid) valid = (0 < inputNum) && (inputNum <= Integer.MAX_VALUE);
 
             // Set output string based on validity
             if (valid) {
