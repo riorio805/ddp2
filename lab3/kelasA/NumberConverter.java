@@ -3,7 +3,7 @@ import javax.swing.JOptionPane;
 public class NumberConverter {
     public static void main (String[] args) {
         String inputStr, outputStr;
-        boolean valid = true;
+        boolean valid;
         long inputNum = 0;
 
         while (true) {
@@ -12,7 +12,7 @@ public class NumberConverter {
                 "Please enter a positive decimal integer <= " + Integer.MAX_VALUE + " or QUIT to quit:",
                 "Number Converter", JOptionPane.PLAIN_MESSAGE);
             // Quit if user inputs "quit"
-            if (inputStr.equalsIgnoreCase("QUIT")) break;
+            if (inputStr == null || inputStr.equalsIgnoreCase("QUIT")) break;
 
             // Reset validity to true
             valid = true;
@@ -46,9 +46,6 @@ public class NumberConverter {
 
         // loop until no more digits left
         while (decInt != 0) {
-            // Calculate next hex digit from the right
-            int digit = decInt % 16;
-
             // From the digit, find the next character in the string
             // Use switch to set the char based on digit
             // If between 10-15 -> A-F

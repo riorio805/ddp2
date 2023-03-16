@@ -13,7 +13,7 @@ public class CreditCardValidation {
                 "Enter a credit card / debit card number as a long integer,\nQUIT to end:\n",
                 "Validation of Credit Card / Debit Card Numbers", JOptionPane.PLAIN_MESSAGE);
             // check if input == "quit", break if so
-            if (cardString.equalsIgnoreCase("quit")) break;
+            if (cardString == null || cardString.equalsIgnoreCase("quit")) break;
 
             // check if input is a number (long)
             try {
@@ -107,8 +107,12 @@ public class CreditCardValidation {
     }
 
     public static long getPrefix (long number, int k) {
+        // return number if number length < k
+        if (getSize(number) <= k) {
+            return number;
+        }
         // number/10^k is exactly the same as taking the first len(number)-k digits of number
         // use Math.pow for exponential then cast to long
-        return number / (long) (Math.pow(10, getSize(number) - getSize(k)));
+        return number / (long) (Math.pow(10, getSize(number) - k));
     }
 }
