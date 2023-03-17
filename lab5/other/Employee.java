@@ -58,12 +58,20 @@ public class Employee {
                     (this.pengalamanKerja <= 15) ? "Expert" : "Pensiun";
 
             // Update status
-            // Cek status, break jika sudah pensiun
             this.status = ! this.jabatan.equalsIgnoreCase("Pensiun");
-            if (! this.status) return;
 
-            // Calculate gaji (x2 if senior, x3 if expert)
-            double gajiSekarang = this.gaji *
+            // Cek status, tidak bisa kerja jika sudah pensiun
+            if (!this.status) return;
+
+            // Do role-exclusive netWorth calculation
+            calculateGaji();
+        }
+    }
+
+    // Method to calculate gaji and add to netWorth
+    void calculateGaji () {
+        // Calculate gaji (x2 if senior, x3 if expert)
+        double gajiSekarang = this.gaji *
                 switch (this.jabatan.toLowerCase()) {
                     case "junior" -> 1;
                     case "senior" -> 2;
@@ -71,16 +79,7 @@ public class Employee {
                     default -> 0;
                 };
 
-            // Add gaji to netWorth
-            this.netWorth += gajiSekarang;
-
-            // Do role-exclusive stuff
-            extraThings();
-        }
+        // Add gaji to netWorth
+        this.netWorth += gajiSekarang;
     }
-
-    /**
-     Empty method to be overridden by other classes that extend this class.
-     */
-    void extraThings () {}
 }

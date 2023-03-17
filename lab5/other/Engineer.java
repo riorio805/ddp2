@@ -32,7 +32,11 @@ public class Engineer extends Employee{
             """, banyakSideJobs);
     }
 
-    // extraThings() now adds (500000 * banyakSideJobs) to netWorth every year
-    @Override
-    void extraThings() { this.netWorth += 500000 * banyakSideJobs; }
+    void calculateGaji () {
+        // normal calculateGaji
+        super.calculateGaji();
+
+        // Engineer adds (500000 * banyakSideJobs) to netWorth every year
+        this.netWorth += 500000 * banyakSideJobs;
+    }
 }

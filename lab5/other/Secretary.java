@@ -24,16 +24,11 @@ public class Secretary extends Employee {
         this.tunjangan = tunjangan;
     }
 
-    public String toString() {
-        return super.toString() + String.format("""
-            Role: Secretary
-            Banyak Tunjangan: %.2f
-            """, tunjangan);
-    }
+    void calculateGaji () {
+        // normal calculateGaji
+        super.calculateGaji();
 
-    // extraThings() now adds tunjangan to netWorth every year
-    @Override
-    void extraThings() {
+        // Secretary adds tunjangan to netWorth every year
         this.netWorth += tunjangan;
     }
 }
