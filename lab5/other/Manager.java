@@ -3,6 +3,16 @@ package ddp2.lab5.other;
 public class Manager extends Employee {
     double raise;
 
+    // test case
+    public static void main(String[] args) {
+        Manager test = new Manager("test", 1.2);
+        while (test.status) {
+            System.out.println(test);
+            test.nextYears( (int) (4 * Math.random()) + 1 );
+        }
+        System.out.println(test);
+    }
+
     /**
      * Create a Manager with name <b>'nama'</b>.
      *
@@ -10,7 +20,7 @@ public class Manager extends Employee {
      */
     public Manager(String nama, double raise) {
         super(nama, "manager");
-        this.raise = raise;
+        this.raise = Math.max(1.0, Math.min(1.25, raise));
     }
 
     public String toString() {

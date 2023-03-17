@@ -6,12 +6,10 @@ public class Engineer extends Employee{
     // test case
     public static void main(String[] args) {
         Engineer test = new Engineer("test", 8);
-        System.out.println(test);
-        test.nextYears(7);
-        System.out.println(test);
-        test.nextYears(7);
-        System.out.println(test);
-        test.nextYears(4);
+        while (test.status) {
+            System.out.println(test);
+            test.nextYears( (int) (4 * Math.random()) + 1 );
+        }
         System.out.println(test);
     }
 
@@ -36,7 +34,5 @@ public class Engineer extends Employee{
 
     // extraThings() now adds (500000 * banyakSideJobs) to netWorth every year
     @Override
-    void extraThings() {
-        this.netWorth += 500000 * banyakSideJobs;
-    }
+    void extraThings() { this.netWorth += 500000 * banyakSideJobs; }
 }

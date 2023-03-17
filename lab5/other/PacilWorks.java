@@ -30,6 +30,8 @@ public class PacilWorks {
 
             printBatas();
         }
+
+        input.close();
     }
 
     public static void printMenu () {
