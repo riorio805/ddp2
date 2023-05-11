@@ -1,4 +1,4 @@
-package ddp2.kelasA.worksheets.ws04;
+package ddp2.kelasA.worksheets.ws04.abc;
 
 public class Cat implements Speakable {
     private String name;

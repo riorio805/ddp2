@@ -1,4 +1,4 @@
-package ddp2.kelasA.worksheets.ws04;
+package ddp2.kelasA.worksheets.ws04.abc;
 
 public class AboutInterface {
     public static void main(String[] args) {

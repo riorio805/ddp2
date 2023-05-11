@@ -1,4 +1,6 @@
 package ddp2.kelasA.worksheets.ws04;
+import ddp2.kelasA.worksheets.ws04.abc.AboutInterface;
+
 import java.util.Date;
 import java.math.*;
 
