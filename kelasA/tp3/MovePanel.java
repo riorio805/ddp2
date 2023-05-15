@@ -29,7 +29,7 @@ public class MovePanel extends JPanel {
 
         // Set up the Panel
         setPreferredSize(new Dimension(WINDOW_WIDTH,WINDOW_HEIGHT));
-        setBackground(Color.white);
+        setBackground(Color.black);
         setFocusable(true);
         setToolTipText("You can manipulate the figure using the keyboard (Arrows (+shift or ctrl)," +
                 "g, s, u, m, d, l, r, c, o, t) or using the mouse (Left click, right click).");
