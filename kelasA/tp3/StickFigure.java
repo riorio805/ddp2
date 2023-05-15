@@ -14,13 +14,26 @@ public class StickFigure {
     private int headDia;
     private boolean headFill = false;
     // Proportions of legs
-    // Describes 2 lines from (baseX, baseY-legLen) to (baseX +- legHDelta, baseY)
+    // Describes 2 lines from
+    // (baseX, baseY - legPos) to (baseX +- legHDelta, baseY)
     private int legPos, legHDelta;
-    // Proportions of arms
-    // Describes 2 lines from (baseX, baseY-armPos) to (baseX +- armHDelta, baseY - armPos + armVDelta)
-    private int armPos, armHdelta, armVDelta;
+    // Proportions of arms (both of them)
+    // Arm position
+    private int armPos,
+        armHdelta;
+    // Left arm
+    // Describes a line from
+    // (baseX, baseY-armPos) to (baseX +/- armHdelta, baseY - armPos + LArmVdelta)
+    // Right arm
+    // Describes a line from
+    // (baseX, baseY-armPos) to (baseX +/- armHdelta, baseY - armPos + RArmVdelta)
+    private int LArmVdelta, RArmVdelta;
+    // Determines whether the arms point the correct direction or the opposite.
+    private boolean leftArmOpposite = false, rightArmOpposite = false;
     // Effective limb proportions to try and correct long limbs when very small
-    private int effArmVDelta, effLegHdelta;
+    private int effLegHdelta;
+    private int effRArmVDelta, effLArmVDelta;
+
     // Thiccness of the figure
     // 0 -> thin, 1 -> medium, 2 -> thicc
     private int thickness = 0;
@@ -46,7 +59,8 @@ public class StickFigure {
         this.height = height;
 
         // set starting pos of legs and arms
-        armVDelta = 20;
+        RArmVdelta = 20;
+        LArmVdelta = 20;
         legHDelta = 15;
 
         // update proportions
@@ -73,8 +87,12 @@ public class StickFigure {
         page.drawLine(baseX, baseY- legPos, baseX, top + headDia);
 
         // Draw arms
-        page.drawLine(baseX, armStartY, baseX+armHdelta, armStartY+effArmVDelta);
-        page.drawLine(baseX, armStartY, baseX-armHdelta, armStartY+effArmVDelta);
+        if (leftArmOpposite) page.drawLine(baseX, armStartY, baseX+armHdelta, armStartY+effLArmVDelta);
+        else page.drawLine(baseX, armStartY, baseX-armHdelta, armStartY+effLArmVDelta);
+
+        if (rightArmOpposite) page.drawLine(baseX, armStartY, baseX-armHdelta, armStartY+effRArmVDelta);
+        else page.drawLine(baseX, armStartY, baseX+armHdelta, armStartY+effRArmVDelta);
+
 
         // Draw head (filled if headFill==true)
         if (headFill) page.fillOval(headTopLeftX, top, headDia, headDia);
@@ -95,7 +113,9 @@ public class StickFigure {
         // Update effective limbs
         // Cap arm vertical delta to height/6
         // Cap leg horizontal delta to height/5
-        effArmVDelta = Math.min(Math.max(armVDelta, -height/6), height / 6);
+        effRArmVDelta = Math.min(Math.max(RArmVdelta, -height/6), height / 6);
+        effLArmVDelta = Math.min(Math.max(LArmVdelta, -height/6), height / 6);
+
         effLegHdelta = Math.min(Math.max(legHDelta, -height/5), height / 5);
     }
 
@@ -137,8 +157,21 @@ public class StickFigure {
      * @param legHDelta - H delta of the legs from the center
      */
     public void moveLimbs (int armVDelta, int legHDelta) {
-        this.armVDelta = armVDelta;
+        this.RArmVdelta = armVDelta;
+        this.LArmVdelta = armVDelta;
         this.legHDelta = legHDelta;
+        update();
+    }
+
+    public void moveLeftArm (int vDelta, boolean opposite) {
+        LArmVdelta = vDelta;
+        leftArmOpposite = opposite;
+        update();
+    }
+
+    public void moveRightArm (int vDelta, boolean opposite) {
+        RArmVdelta = vDelta;
+        rightArmOpposite = opposite;
         update();
     }
 

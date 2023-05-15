@@ -63,7 +63,6 @@ public class MovePanel extends JPanel {
          the o key switches between filling the head and not
          the t key cycles between 3 thicknesses
         */
-        @Override
         public void keyPressed (KeyEvent e) {
             STEP = BASE_STEP;
             if (e.isShiftDown()) STEP = BASE_STEP * 3;
@@ -74,6 +73,14 @@ public class MovePanel extends JPanel {
                 case KeyEvent.VK_RIGHT -> stickMan.move(STEP, 0);
                 case KeyEvent.VK_UP -> stickMan.move(0, -STEP);
                 case KeyEvent.VK_DOWN -> stickMan.move(0, STEP);
+                case KeyEvent.VK_L -> {
+                    stickMan.moveLeftArm(10, false);
+                    stickMan.moveRightArm(30, true);
+                }
+                case KeyEvent.VK_R -> {
+                    stickMan.moveLeftArm(10, true);
+                    stickMan.moveRightArm(30, false);
+                }
                 case KeyEvent.VK_G -> stickMan.resize(1.5);
                 case KeyEvent.VK_S -> stickMan.resize(0.5);
                 case KeyEvent.VK_U -> stickMan.moveLimbs(-60, 40);
@@ -119,7 +126,6 @@ public class MovePanel extends JPanel {
         public void keyReleased(KeyEvent e) {}
         public void mouseClicked(MouseEvent e) {}
         public void mouseReleased(MouseEvent e) {}
-
         public void mouseMoved(MouseEvent e) {}
     }
 }
