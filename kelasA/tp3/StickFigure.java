@@ -160,6 +160,7 @@ public class StickFigure {
         this.RArmVdelta = armVDelta;
         this.LArmVdelta = armVDelta;
         this.legHDelta = legHDelta;
+        leftArmOpposite = rightArmOpposite = false;
         update();
     }
 

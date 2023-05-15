@@ -31,7 +31,8 @@ public class MovePanel extends JPanel {
         setPreferredSize(new Dimension(WINDOW_WIDTH,WINDOW_HEIGHT));
         setBackground(Color.white);
         setFocusable(true);
-        setToolTipText("You can manipulate the figure using the keyboard (Arrows (+shift or ctrl), g, s, u, m, d, c, o, t) or using the mouse (Left click, right click).");
+        setToolTipText("You can manipulate the figure using the keyboard (Arrows (+shift or ctrl)," +
+                "g, s, u, m, d, l, r, c, o, t) or using the mouse (Left click, right click).");
     }
 
 
@@ -74,12 +75,12 @@ public class MovePanel extends JPanel {
                 case KeyEvent.VK_UP -> stickMan.move(0, -STEP);
                 case KeyEvent.VK_DOWN -> stickMan.move(0, STEP);
                 case KeyEvent.VK_L -> {
-                    stickMan.moveLeftArm(10, false);
+                    stickMan.moveLimbs(10, 20);
                     stickMan.moveRightArm(30, true);
                 }
                 case KeyEvent.VK_R -> {
+                    stickMan.moveLimbs(30, 20);
                     stickMan.moveLeftArm(10, true);
-                    stickMan.moveRightArm(30, false);
                 }
                 case KeyEvent.VK_G -> stickMan.resize(1.5);
                 case KeyEvent.VK_S -> stickMan.resize(0.5);
