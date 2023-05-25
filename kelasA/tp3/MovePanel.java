@@ -11,15 +11,15 @@ public class MovePanel extends JPanel {
             WINDOW_HEIGHT = 400,
             BASE_STEP = 8,
             ST_CENTER = (WINDOW_WIDTH / 2),
-            ST_BOTTOM = (3 * WINDOW_HEIGHT / 4),
-            ST_SIZE = 2 * WINDOW_HEIGHT / 5;
+            ST_BOTTOM = (4 * WINDOW_HEIGHT / 5),
+            ST_SIZE = 3 * WINDOW_HEIGHT / 5;
     private int STEP = BASE_STEP;   // Effective step size, changes when shift or ctrl is pressed
     private StickFigure stickMan;   // Stick figure object
-    private boolean mouseOn = false;
+    private boolean mouseOn = false; // Check whether mouse is on the screen
 
     // Panel constructor
     public MovePanel() {
-        // Add key listener and mouse listener
+        // Add key and mouse listener
         addKeyListener(new MoveListener());
         addMouseListener(new MoveListener());
         addMouseMotionListener(new MoveListener());
@@ -35,8 +35,8 @@ public class MovePanel extends JPanel {
                 "g, s, u, m, d, l, r, c, o, t) or using the mouse (Left click, right click).");
     }
 
-
-    // Draws the figures
+    // Draws the figure
+    @Override
     public void paintComponent (Graphics page) {
         super.paintComponent (page);
         stickMan.draw((Graphics2D) page);
@@ -68,6 +68,7 @@ public class MovePanel extends JPanel {
             STEP = BASE_STEP;
             if (e.isShiftDown()) STEP = BASE_STEP * 3;
             if (e.isControlDown()) STEP = BASE_STEP / 2;
+
 
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT -> stickMan.move(-STEP, 0);
@@ -112,12 +113,14 @@ public class MovePanel extends JPanel {
             }
             repaint();
         }
+
         public void mouseDragged(MouseEvent e) {
             if (!mouseOn) return;
             stickMan.moveToMousePos(getMousePosition());
             repaint();
         }
 
+        // Exception to handle when mouse is dragged off-screen
         public void mouseEntered(MouseEvent e) {mouseOn = true;}
         public void mouseExited(MouseEvent e) {mouseOn = false;}
 

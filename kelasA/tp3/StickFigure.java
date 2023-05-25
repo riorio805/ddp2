@@ -7,20 +7,21 @@ public class StickFigure {
     // color
     private Color color;
     // position and size
-    // baseX, baseY => bottom center of stickman, height => bottom to top in pixels
+    // (baseX, baseY) => bottom center of stickman, height => bottom to top in pixels
     private int baseX, baseY, height;
     // Proportions of head
-    // Only diameter is required
+    // Only diameter is required for proportions
     private int headDia;
+    // Appearance of head
+    // Determines if the head is filled or not
     private boolean headFill = false;
     // Proportions of legs
     // Describes 2 lines from
     // (baseX, baseY - legPos) to (baseX +- legHDelta, baseY)
-    private int legPos, legHDelta;
+    private int legPos, legHdelta;
     // Proportions of arms (both of them)
     // Arm position
-    private int armPos,
-        armHdelta;
+    private int armPos, armHdelta;
     // Left arm
     // Describes a line from
     // (baseX, baseY-armPos) to (baseX +/- armHdelta, baseY - armPos + LArmVdelta)
@@ -31,8 +32,7 @@ public class StickFigure {
     // Determines whether the arms point the correct direction or the opposite.
     private boolean leftArmOpposite = false, rightArmOpposite = false;
     // Effective limb proportions to try and correct long limbs when very small
-    private int effLegHdelta;
-    private int effRArmVDelta, effLArmVDelta;
+    private int effLegHdelta, effRArmVDelta, effLArmVDelta;
 
     // Thiccness of the figure
     // 0 -> thin, 1 -> medium, 2 -> thicc
@@ -58,10 +58,11 @@ public class StickFigure {
         this.color = color;
         this.height = height;
 
+
         // set starting pos of legs and arms
         RArmVdelta = 20;
         LArmVdelta = 20;
-        legHDelta = 15;
+        legHdelta = 15;
 
         // update proportions
         update();
@@ -113,10 +114,10 @@ public class StickFigure {
         // Update effective limbs
         // Cap arm vertical delta to height/6
         // Cap leg horizontal delta to height/5
-        effRArmVDelta = Math.min(Math.max(RArmVdelta, -height/6), height / 6);
-        effLArmVDelta = Math.min(Math.max(LArmVdelta, -height/6), height / 6);
+        effRArmVDelta = Math.min(Math.max(RArmVdelta, -height/3), height / 3);
+        effLArmVDelta = Math.min(Math.max(LArmVdelta, -height/3), height / 3);
 
-        effLegHdelta = Math.min(Math.max(legHDelta, -height/5), height / 5);
+        effLegHdelta = Math.min(Math.max(legHdelta, -height/5), height / 5);
     }
 
 
@@ -159,17 +160,27 @@ public class StickFigure {
     public void moveLimbs (int armVDelta, int legHDelta) {
         this.RArmVdelta = armVDelta;
         this.LArmVdelta = armVDelta;
-        this.legHDelta = legHDelta;
+        this.legHdelta = legHDelta;
         leftArmOpposite = rightArmOpposite = false;
         update();
     }
 
+    /**
+     * Moves only the left arm according to the parameters
+     * @param vDelta - V delta of the start of the arms to the hand, positive is downwards
+     * @param opposite - Boolean, arm points right or left
+     */
     public void moveLeftArm (int vDelta, boolean opposite) {
         LArmVdelta = vDelta;
         leftArmOpposite = opposite;
         update();
     }
 
+    /**
+     * Moves only the right arm according to the parameters
+     * @param vDelta - V delta of the start of the arms to the hand, positive is downwards
+     * @param opposite - Boolean, arm points left or right  
+     */
     public void moveRightArm (int vDelta, boolean opposite) {
         RArmVdelta = vDelta;
         rightArmOpposite = opposite;
